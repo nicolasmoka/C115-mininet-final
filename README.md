@@ -84,6 +84,8 @@ b) Inspecione informações das interfaces, endereços MAC, IP e portas através
 
 c) Crie um desenho ilustrativo da topologia com todas as informações obtidas no item anterior;
 
+![alt text](images/topologia-ex-2.png)
+
 d) Faça testes de ping considerando os switches normais;
 
 e) Apague as regras anteriores e crie regras baseadas em endereços MAC para alguns nós. (Deve-se comunicar hosts dos diferentes switches);
