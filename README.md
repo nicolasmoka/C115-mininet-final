@@ -32,6 +32,8 @@ Comando: s1 ifconfig -a
 
 c) Crie um desenho ilustrativo da topologia com todas as informações obtidas no item anterior;
 
+![alt text](images/topologia-ex-1.png)
+
 d) Execute testes de ping entre os diferentes nós, mostre os pacotes chegando nos nós com uso do comando tcpdump.
 
 Comando: xterm h1 h2
