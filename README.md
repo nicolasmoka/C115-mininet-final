@@ -76,19 +76,8 @@ Comando em h2: iperf -c 10.0.0.1 -p 5555 -i 1 -t 20
 
 ![alt text](images/mn_ex1_com_10.h2_40Mbit.png)
 
-2) Crie um código Python para a topologia customizada abaixo
-   
-a) Com uso de linha de comando padrão do Mininet, crie a topologia customizada considerando o endereço MAC padronizado e controlador manual;
-
-b) Inspecione informações das interfaces, endereços MAC, IP e portas através de linhas de comando;
+### Exercício 2
 
 c) Crie um desenho ilustrativo da topologia com todas as informações obtidas no item anterior;
 
 ![alt text](images/topologia-ex-2.png)
-
-d) Faça testes de ping considerando os switches normais;
-
-e) Apague as regras anteriores e crie regras baseadas em endereços MAC para alguns nós. (Deve-se comunicar hosts dos diferentes switches);
-
-f) Faça testes de ping para demonstrar que as regras foram bem implementadas
-
