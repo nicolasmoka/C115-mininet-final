@@ -38,7 +38,7 @@ if __name__ == '__main__':
     net.pingAll()
     print("Interfaces:")
     for host in net.hosts:
-        print(f"{host.name} ifconfig:")
+        print("\n{} ifconfig:".format(host.name))
         print(host.cmd('ifconfig'))
 
     print("Limpando regras de fluxo:")
