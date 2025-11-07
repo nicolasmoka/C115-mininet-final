@@ -1,14 +1,11 @@
 from mininet.topo import Topo
 from mininet.net import Mininet
-from mininet.node import RemoteController, OVSSwitch
+from mininet.node import Controller
 from mininet.cli import CLI
 from mininet.link import TCLink
 
 class MyTopo(Topo):
     def build(self):
-        # Initialize topology
-        Topo.__init__( self )
-
         # Hosts with standardized MACs
         h1 = self.addHost('h1', mac='00:00:00:00:00:01')
         h2 = self.addHost('h2', mac='00:00:00:00:00:02')
@@ -34,30 +31,40 @@ class MyTopo(Topo):
 
 if __name__ == '__main__':
     topo = MyTopo()
-    net = Mininet(topo=topo, switch=OVSSwitch, controller=RemoteController, link=TCLink, autoSetMacs=True)
+    net = Mininet(topo=topo, controller=Controller, link=TCLink, autoSetMacs=True)
     net.start()
 
-    print("Network information:")
-    net.pingAll()
-    print("Interfaces:")
-    for host in net.hosts:
-        print("\n{} ifconfig:".format(host.name))
-        print(host.cmd('ifconfig'))
+    
+    print("--------------- Network information ---------------")
+    print("Controlers:", net.controllers)
+    print("Switches:", net.switches)
+    print("Hosts:", net.hosts)
 
-    print("Clearing flow rules:")
+    print()
+    for link in net.links:
+        print(link)
+
+    print("--------------- Ping test before flow rule changes ---------------")
+    net.pingAll()
+    h1, h4 = net.get('h1', 'h4')
+    print(h1.cmd('ping -c 3', h4.IP()))
+
+    print("--------------- Clearing flow rules ---------------")
     for sw in net.switches:
         sw.cmd('ovs-ofctl del-flows ' + sw.name)
+    
+    print("Flow rules cleared")
 
-    print("Adding rules based on MAC:")
-    net.switches[1].cmd('ovs-ofctl add-flow s2 dl_src=00:00:00:00:00:01,dl_dst=00:00:00:00:00:02,actions=output:2')
-    net.switches[1].cmd('ovs-ofctl add-flow s2 dl_src=00:00:00:00:00:02,dl_dst=00:00:00:00:00:01,actions=output:1')
-    net.switches[2].cmd('ovs-ofctl add-flow s3 dl_src=00:00:00:00:00:03,actions=output:1')
-    net.switches[3].cmd('ovs-ofctl add-flow s4 dl_src=00:00:00:00:00:04,actions=output:1')
+    print("--------------- Creating new flow rules ---------------")
+    net.switches[0].cmd('ovs-ofctl add-flow s1 dl_src=00:00:00:00:00:01,actions=output:2')
+    net.switches[0].cmd('ovs-ofctl add-flow s1 dl_dst=00:00:00:00:00:01,actions=output:1')
+    net.switches[1].cmd('ovs-ofctl add-flow s2 dl_src=00:00:00:00:00:04,actions=output:2')
+    net.switches[1].cmd('ovs-ofctl add-flow s2 dl_dst=00:00:00:00:00:04,actions=output:1')
 
-    print("Conctivity test after applying rules:")
-    h1, h2, h3, h4 = net.get('h1', 'h2', 'h3', 'h4')
-    print(h1.cmd('ping -c 3 10.0.0.2'))
-    print(h3.cmd('ping -c 3 10.0.0.4'))
+    print('Flow rules created')
+    
+    print("--------------- Ping test after flow rule changes ---------------")
+    print(h1.cmd('ping -c 3', h4.IP()))
 
     CLI(net)
     net.stop()

@@ -78,6 +78,38 @@ Comando em h2: iperf -c 10.0.0.1 -p 5555 -i 1 -t 20
 
 ### Exercício 2
 
+a) Topologia criada pelo script python "execicio2.py".
+
+b) Foram inspecionadas as informações das interfaces, endereços MAC, IP e portas através de linhas de comando.
+
+Comando: nodes
+
+![alt text](images/mn_ex2_com_1.png)
+
+Comando: net
+
+![alt text](images/mn_ex2_com_2.png)
+
+Comando: dump
+
+![alt text](images/mn_ex2_com_3.png)
+
 c) Crie um desenho ilustrativo da topologia com todas as informações obtidas no item anterior;
 
 ![alt text](images/topologia-ex-2.png)
+
+d) Testes de conectividade antes de mudar as regras
+
+Comando: pingall
+
+![alt text](images/mn_ex2_com_4.png)
+
+Comando: h1 ping h4
+
+![alt text](images/mn_ex2_com_5.png)
+
+e) Foram apagadas as regras anteriores e novas regras foram criadas.
+
+f) Após isso foram feitos os testes de conectividade novamete via script python.
+
+![alt text](images/mn_ex2_com_6.png)
